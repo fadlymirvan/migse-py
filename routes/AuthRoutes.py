@@ -1,0 +1,17 @@
+from flask import Blueprint
+
+from controllers import LoginController, LogoutController
+
+authRoutes = Blueprint('authRoutes', __name__)
+
+authRoutes.add_url_rule(
+    "/login",
+    view_func=LoginController.as_view('login_url'),
+    methods=['POST']
+)
+
+authRoutes.add_url_rule(
+    "/logout",
+    view_func=LogoutController.as_view('logout_url'),
+    methods=['POST']
+)
