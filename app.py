@@ -21,4 +21,3 @@ app.register_blueprint(attendanceRoutes, url_prefix=PREFIX+'/attendance')
 
 if __name__ == '__main__':
     app.run()
-    DB.create_all()
