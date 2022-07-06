@@ -38,9 +38,9 @@ class Activity(DB.Model):
         }
 
     def update(self, data):
-        self.title = data.get("title")
-        self.description = data.get("description")
-        self.user_id = data.get("user_id")
+        self.title = data.title
+        self.description = data.description
+        self.user_id = data.user_id
         self.updated_at = datetime.utcnow()
         DB.session.commit()
 
