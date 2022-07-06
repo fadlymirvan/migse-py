@@ -1,1 +1,1 @@
-web: gunicorn migse-py:app
+web: gunicorn app:migse-py
