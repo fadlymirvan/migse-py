@@ -120,7 +120,8 @@ class ActivityController(MethodView):
 
             try:
                 activity = Activity.get_activity_by_id(act_id)
-                act = Activity(data).to_dict()
+                act = Activity(data)
+                act.user_id = user_id
 
             except Exception as err:
                 return ResponseAPI(
