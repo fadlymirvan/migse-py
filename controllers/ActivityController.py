@@ -88,7 +88,7 @@ class ActivityController(MethodView):
                 message="Add Activity Successfully",
                 code=http.client.CREATED,
                 data={
-                    "aid": act.id
+                    "aid": act.to_dict()
                 }
             )
 
@@ -122,7 +122,6 @@ class ActivityController(MethodView):
                 activity = Activity.get_activity_by_id(act_id)
                 act = Activity(data)
                 act.user_id = user_id
-                act.id = activity.id
 
             except Exception as err:
                 return ResponseAPI(
@@ -137,7 +136,7 @@ class ActivityController(MethodView):
                 message="Update Activity Successfully",
                 code=http.client.OK,
                 data={
-                    "aid": activity.id
+                    "aid": activity.to_dict()
                 }
             )
 

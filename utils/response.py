@@ -12,6 +12,7 @@ def datetime_handler(n):
 
 def ResponseAPI(message, code, data):
     return Response(
+        status=code,
         mimetype="application/json",
         response=json.dumps({
             "message": message,

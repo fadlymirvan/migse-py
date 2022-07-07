@@ -82,6 +82,6 @@ class LogoutController(MethodView):
         else:
             return ResponseAPI(
                 message="Logout Failed!",
-                code=http.client.INTERNAL_SERVER_ERROR,
+                code=http.client.BAD_REQUEST,
                 data=None
             )

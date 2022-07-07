@@ -55,9 +55,7 @@ class AttendanceInController(MethodView):
                 resp = ResponseAPI(
                     message="Check In Successfully",
                     code=http.client.OK,
-                    data={
-                        "aid": attd.id
-                    }
+                    data=None
                 )
 
                 resp.set_cookie("is_checkin", "True", expires=datetime.datetime.utcnow() + datetime.timedelta(days=1))
@@ -99,9 +97,7 @@ class AttendanceOutController(MethodView):
                 resp = ResponseAPI(
                     message="Check Out Successfully",
                     code=http.client.OK,
-                    data={
-                        "aid": attd.id
-                    }
+                    data=None
                 )
 
                 resp.delete_cookie("is_checkin")
@@ -114,3 +110,9 @@ class AttendanceOutController(MethodView):
                     code=http.client.BAD_REQUEST,
                     data=None
                 )
+        else:
+            return ResponseAPI(
+                message="Unauthorized!",
+                code=http.client.UNAUTHORIZED,
+                data=None
+            )
