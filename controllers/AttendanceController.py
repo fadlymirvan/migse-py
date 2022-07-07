@@ -9,13 +9,14 @@ from models import Attendance
 from utils import ResponseAPI
 
 
+# History Controller to Handle Get History Attendance
 class HistoryController(MethodView):
     def get(self):
-        isAuth, user_id, auth_token = CheckJWT()
+        isAuth, user_id, auth_token = CheckJWT()  # Check user auth
 
-        if isAuth:
-            data = Attendance.get_all_attendance(user_id)
-            attendances = [obj.to_dict() for obj in data]
+        if isAuth:  # Validate user Auth
+            data = Attendance.get_all_attendance(user_id)  # Get All History CheckIn and CheckOut
+            attendances = [obj.to_dict() for obj in data]  # Convert Class List into List of Dictionary
 
             return ResponseAPI(
                 message="Successfully retrieve all Activity",
@@ -33,11 +34,12 @@ class HistoryController(MethodView):
             )
 
 
+# To Handle Check In Request
 class AttendanceInController(MethodView):
     def post(self):
-        isAuth, user_id, auth_token = CheckJWT()
+        isAuth, user_id, auth_token = CheckJWT()  # Check user Auth from JWT
         if isAuth:
-            isCheckIn = request.cookies.get("is_checkin")
+            isCheckIn = request.cookies.get("is_checkin")  # Check is_checkin Cookie if already checkin
             if not isCheckIn:
                 try:
                     attd = Attendance()
@@ -50,7 +52,7 @@ class AttendanceInController(MethodView):
                         data=None
                     )
 
-                attd.save()
+                attd.save()  # Save Check In Status into database
 
                 resp = ResponseAPI(
                     message="Check In Successfully",
@@ -58,6 +60,7 @@ class AttendanceInController(MethodView):
                     data=None
                 )
 
+                # Setup Cookie and set expires date
                 resp.set_cookie("is_checkin", "True", expires=datetime.datetime.utcnow() + datetime.timedelta(days=1))
                 return resp
 
@@ -75,11 +78,12 @@ class AttendanceInController(MethodView):
             )
 
 
+# To Handle Check Out Request
 class AttendanceOutController(MethodView):
     def post(self):
-        isAuth, user_id, auth_token = CheckJWT()
+        isAuth, user_id, auth_token = CheckJWT()  # Check user Auth by JWT
         if isAuth:
-            isCheckIn = request.cookies.get("is_checkin")
+            isCheckIn = request.cookies.get("is_checkin")  # Check Cookie if user already Check In
             if isCheckIn:
                 try:
                     attd = Attendance()
@@ -92,7 +96,7 @@ class AttendanceOutController(MethodView):
                         data=None
                     )
 
-                attd.save()
+                attd.save()  # Save Check Out data to Database
 
                 resp = ResponseAPI(
                     message="Check Out Successfully",
@@ -100,6 +104,7 @@ class AttendanceOutController(MethodView):
                     data=None
                 )
 
+                # Remove existing cookie
                 resp.delete_cookie("is_checkin")
 
                 return resp

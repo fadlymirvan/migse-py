@@ -5,13 +5,14 @@ import jwt
 
 
 class Auth:
+    # Function to generate token/JWT
     @staticmethod
     def generate_token(user_id):
         try:
             payload = {
-                'exp': datetime.datetime.utcnow() + datetime.timedelta(days=1),
-                'iat': datetime.datetime.utcnow(),
-                'uid': user_id
+                'exp': datetime.datetime.utcnow() + datetime.timedelta(days=1),  # Expired Date
+                'iat': datetime.datetime.utcnow(),  # Create Date
+                'uid': user_id  # User ID
             }
 
             return jwt.encode(
@@ -23,6 +24,7 @@ class Auth:
         except Exception as err:
             return err
 
+    # Function to decode token/JWT to get Data such as user_id, expired_date, or even Validate
     @staticmethod
     def decode_token(token):
         decode_token = {"data": {}, "error": {}}

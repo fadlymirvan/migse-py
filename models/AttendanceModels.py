@@ -4,16 +4,17 @@ from . import DB
 
 
 class Attendance(DB.Model):
-    # Table Name
+    # Define Table Name
     __tablename__ = "attendance"
 
-    # Column
+    # Define Column
     id = DB.Column(DB.Integer, primary_key=True)
     user_id = DB.Column(DB.Integer, nullable=False)
     description = DB.Column(DB.String(15))
     created_at = DB.Column(DB.DateTime)
     updated_at = DB.Column(DB.DateTime)
 
+    # Create Constructor
     def __init__(self):
         self.user_id = ""
         self.description = ""
@@ -23,6 +24,7 @@ class Attendance(DB.Model):
     def __repr__(self):
         return '<id {}>'.format(self.id)
 
+    # To Convert Class data to Dictionary
     def to_dict(self):
         return {
             "id": self.id,
@@ -32,10 +34,12 @@ class Attendance(DB.Model):
             "updated_at": self.updated_at
         }
 
+    # To Handle Save data to Database
     def save(self):
         DB.session.add(self)
         DB.session.commit()
 
+    # To Handle Get All Attendance Data
     @staticmethod
     def get_all_attendance(user_id):
         return Attendance.query.filter_by(user_id=user_id).all()

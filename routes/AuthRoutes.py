@@ -2,8 +2,10 @@ from flask import Blueprint
 
 from controllers import LoginController, LogoutController
 
+# Define the Blueprint Name
 authRoutes = Blueprint('authRoutes', __name__)
 
+# Register URL Rule with the method
 authRoutes.add_url_rule(
     "/login",
     view_func=LoginController.as_view('login_url'),
